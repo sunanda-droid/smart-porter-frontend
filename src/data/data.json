@@ -1,0 +1,20 @@
+{
+  "dashboard": {
+    "users": 120,
+    "scans": 45,
+    "growth": [10, 20, 30, 40, 50, 60],
+    "scanStats": [
+      { "name": "Jan", "scans": 5 },
+      { "name": "Feb", "scans": 8 },
+      { "name": "Mar", "scans": 12 },
+      { "name": "Apr", "scans": 7 },
+      { "name": "May", "scans": 13 },
+      { "name": "Jun", "scans": 18 }
+    ]
+  },
+  "scans": [
+    { "id": 1, "name": "Scan 1", "status": "Completed", "date": "2025-07-19" },
+    { "id": 2, "name": "Scan 2", "status": "Running", "date": "2025-07-20" },
+    { "id": 3, "name": "Scan 3", "status": "Failed", "date": "2025-07-18" }
+  ]
+}
