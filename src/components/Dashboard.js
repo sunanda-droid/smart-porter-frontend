@@ -19,7 +19,7 @@ const Dashboard = () => {
           <Typography variant="h4" align="center">{data.dashboard.scans}</Typography>
         </Paper>
       </Grid>
-      <Grid item xs={12} sm={4}>
+      {/* <Grid item xs={12} sm={4}>
         <Paper elevation={2} sx={{ p: 2 }}>
           <Typography variant="h6" align="center">Growth</Typography>
           <ResponsiveContainer width="100%" height={60}>
@@ -28,7 +28,7 @@ const Dashboard = () => {
             </LineChart>
           </ResponsiveContainer>
         </Paper>
-      </Grid>
+      </Grid> */}
       <Grid item xs={12} md={8}>
         <Paper elevation={2} sx={{ p: 2, height: 300 }}>
           <Typography variant="h6">Scan Stats (Monthly)</Typography>

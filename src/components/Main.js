@@ -15,7 +15,7 @@ const Main = ({ onLogout }) => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            Dashboard App
+           Smart Porter
           </Typography>
           <Button color="inherit" onClick={onLogout}>
             Logout
