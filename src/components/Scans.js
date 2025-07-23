@@ -40,6 +40,29 @@ const Scans = () => {
     setDialogOpen(true);
   };
 
+  const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
+  const [upgradeMessage, setUpgradeMessage] = useState("");
+  const [upgradeLoading, setUpgradeLoading] = useState(false);
+
+  const handleAutoUpgrade = async (scan) => {
+    setUpgradeLoading(true);
+    setUpgradeDialogOpen(true);
+    try {
+      // const res = await axios.post('/upgrateRepo', { artifactId: scan.artifactId });
+      const res = await axios.get("/autoUpgrade.json");
+      setUpgradeMessage(res.data.message || "Upgrade completed.");
+    } catch (err) {
+      setUpgradeMessage("Upgrade failed.");
+    }
+    setUpgradeLoading(false);
+  };
+
+  const handleUpgradeDialogClose = () => {
+    setUpgradeDialogOpen(false);
+    setUpgradeMessage("");
+    setUpgradeLoading(false);
+  };
+
   const handleDialogClose = () => {
     setDialogOpen(false);
     setDialogSummary("");
@@ -60,7 +83,7 @@ const Scans = () => {
         }}
       >
       {/* Dropdown and Run button */}
-      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3, justifyContent: 'center' }}>
         <FormControl sx={{ minWidth: 220 }} size="small">
           <InputLabel id="repo-label">Select Repository</InputLabel>
           <Select
@@ -149,7 +172,7 @@ const Scans = () => {
                   color="success"
                   size="medium"
                   sx={{ fontWeight: 600, borderRadius: 2, textTransform: 'none' }}
-                  onClick={() => alert(`AutoUpgrade for ${scan.artifactId}`)}
+                  onClick={() => handleAutoUpgrade(scan)}
                   disabled={scan.compatibilityFlag === false}
                 >
                   AutoUpgrade
@@ -170,7 +193,33 @@ const Scans = () => {
         <DialogActions>
           <Button onClick={handleDialogClose} color="primary" variant="contained">Close</Button>
         </DialogActions>
-        </Dialog>
+      </Dialog>
+      <Dialog open={upgradeDialogOpen} onClose={handleUpgradeDialogClose} maxWidth="sm" fullWidth>
+        <DialogTitle>AutoUpgrade Result</DialogTitle>
+        <DialogContent>
+          {upgradeLoading ? (
+            <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 4 }}>
+              <Typography variant="body1" sx={{ mb: 2, fontWeight: 600, color: 'primary.main' }}>
+                creating a featureBranch with updates
+              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="body1" sx={{ mr: 2 }}>Upgrading...</Typography>
+                <Box sx={{ display: 'inline-block' }}>
+                  <span className="MuiCircularProgress-root MuiCircularProgress-colorPrimary" style={{ width: 32, height: 32, display: 'inline-block', border: '4px solid #1976d2', borderRadius: '50%', borderTop: '4px solid #fff', animation: 'spin 1s linear infinite' }}></span>
+                </Box>
+                <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
+              </Box>
+            </Box>
+          ) : (
+            <Typography variant="body1" sx={{ py: 2 }}>
+              {upgradeMessage}
+            </Typography>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleUpgradeDialogClose} color="primary" variant="contained" disabled={upgradeLoading}>Close</Button>
+        </DialogActions>
+      </Dialog>
       </>
   );
 }
