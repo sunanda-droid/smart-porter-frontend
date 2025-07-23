@@ -1,20 +1,68 @@
 {
   "dashboard": {
-    "users": 120,
-    "scans": 45,
-    "growth": [10, 20, 30, 40, 50, 60],
-    "scanStats": [
-      { "name": "Jan", "scans": 5 },
-      { "name": "Feb", "scans": 8 },
-      { "name": "Mar", "scans": 12 },
-      { "name": "Apr", "scans": 7 },
-      { "name": "May", "scans": 13 },
-      { "name": "Jun", "scans": 18 }
-    ]
-  },
-  "scans": [
-    { "id": 1, "name": "Scan 1", "status": "Completed", "date": "2025-07-19" },
-    { "id": 2, "name": "Scan 2", "status": "Running", "date": "2025-07-20" },
-    { "id": 3, "name": "Scan 3", "status": "Failed", "date": "2025-07-18" }
-  ]
+    "javaProjects": 120,
+    "impactedJavaProjects": 45,
+    "pythonProjects": 120,
+    "impactedPythonProjects": 45,
+  "TableData": [
+    {
+      "id": 1,
+      "name": "CIO Enabling Services",
+      "JavaProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      },
+      "pythonProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      }
+    },
+    {
+      "id": 2,
+      "name": "CIO Commercial",
+      "JavaProjects": {
+        "impacted": "15",
+        "percentageImpact": "10%"
+      },
+      "pythonProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      }
+    },
+    {
+      "id": 3,
+      "name": "CIO Enterprise Services",
+      "JavaProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      },
+      "PythonProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      }
+    },
+    {
+      "id": 4,
+      "name": "CIO Consumer",
+      "JavaProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      },
+      "PythonProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      }
+    },{
+      "id": 5,
+      "name": "CIO Security",
+      "JavaProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      },
+      "PythonProjects": {
+        "impacted": "15",
+        "percentageImpact": "30%"
+      }
+    }
+  ] }
 }
