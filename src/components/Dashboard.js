@@ -54,14 +54,14 @@ const Dashboard = ({data}) => {
                   const py = row.pythonProjects || row.PythonProjects;
                   const javaPercent = parseInt(row.JavaProjects.percentageImpact);
                   const pythonPercent = parseInt(py.percentageImpact);
-                  const highlight = javaPercent < 30 || pythonPercent < 30;
+                  const highlight = javaPercent > 50 || pythonPercent > 50;
                   return (
                     <TableRow key={row.id} sx={{ backgroundColor: highlight ? '#fce6e9ff' : '#dbf6ddff', transition: 'background 0.3s' }}>
                       <TableCell>{row.name}</TableCell>
                       <TableCell align="center">{row.JavaProjects.impacted}</TableCell>
-                      <TableCell align="center" sx={{ fontWeight: 'bold', color: javaPercent < 30 ? 'error.main' : 'success.main' }}>{row.JavaProjects.percentageImpact}</TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 'bold', color: javaPercent > 50 ? 'error.main' : 'success.main' }}>{row.JavaProjects.percentageImpact}</TableCell>
                       <TableCell align="center">{py.impacted}</TableCell>
-                      <TableCell align="center" sx={{ fontWeight: 'bold', color: pythonPercent < 30 ? 'error.main' : 'success.main' }}>{py.percentageImpact}</TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 'bold', color: pythonPercent > 50 ? 'error.main' : 'success.main' }}>{py.percentageImpact}</TableCell>
                     </TableRow>
                   );
                 })}

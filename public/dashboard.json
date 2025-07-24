@@ -10,7 +10,7 @@
         "name": "CIO Enabling Services",
         "JavaProjects": {
           "impacted": "15",
-          "percentageImpact": "30%"
+          "percentageImpact": "60%"
         },
         "pythonProjects": {
           "impacted": "15",
@@ -21,7 +21,7 @@
         "id": 2,
         "name": "CIO Commercial",
         "JavaProjects": {
-          "impacted": "15",
+          "impacted": "25",
           "percentageImpact": "10%"
         },
         "pythonProjects": {
@@ -33,48 +33,48 @@
         "id": 3,
         "name": "CIO Enterprise Services",
         "JavaProjects": {
-          "impacted": "15",
-          "percentageImpact": "30%"
+          "impacted": "35",
+          "percentageImpact": "40%"
         },
         "PythonProjects": {
           "impacted": "15",
-          "percentageImpact": "30%"
+          "percentageImpact": "20%"
         }
       },
       {
         "id": 4,
         "name": "CIO Consumer",
         "JavaProjects": {
-          "impacted": "15",
-          "percentageImpact": "30%"
+          "impacted": "20",
+          "percentageImpact": "10%"
         },
         "PythonProjects": {
-          "impacted": "15",
-          "percentageImpact": "30%"
+          "impacted": "19",
+          "percentageImpact": "60%"
         }
       },
       {
         "id": 5,
         "name": "CIO Security",
         "JavaProjects": {
-          "impacted": "15",
-          "percentageImpact": "30%"
+          "impacted": "25",
+          "percentageImpact": "40%"
         },
         "PythonProjects": {
-          "impacted": "15",
-          "percentageImpact": "30%"
+          "impacted": "35",
+          "percentageImpact": "20%"
         }
       }
     ],
     "lineGraphData": [
       {
-        "quarter": "Q1", "projectsAdded": 10, "incompatibleProjects": 2
+        "quarter": "Q1", "projectsAdded": 210, "incompatibleProjects": 120
       },
-      { "quarter": "Q2", "projectsAdded": 15, "incompatibleProjects": 5
+      { "quarter": "Q2", "projectsAdded": 215, "incompatibleProjects": 80
       },
-      { "quarter": "Q3", "projectsAdded": 20, "incompatibleProjects": 3
+      { "quarter": "Q3", "projectsAdded": 220, "incompatibleProjects": 50
       },
-      { "quarter": "Q4", "projectsAdded": 25, "incompatibleProjects": 4
+      { "quarter": "Q4", "projectsAdded": 225, "incompatibleProjects": 100
       }
     ]
   }
