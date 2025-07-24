@@ -35,17 +35,23 @@ const Main = ({ onLogout }) => {
           <Toolbar>
             <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
               <Box sx={{
-                width: 40,
-                height: 40,
+                width: 44,
+                height: 44,
                 background: 'white',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 mr: 2,
-                boxShadow: 2
+                boxShadow: 2,
+                overflow: 'hidden',
+                p: 0.5
               }}>
-                <span role="img" aria-label="logo" style={{ fontSize: 28 }}>⚡</span>
+                <img
+                  src={process.env.PUBLIC_URL + '/smartporter-logo.png'}
+                  alt="SmartPorter Logo"
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
               </Box>
               <Typography variant="h5" sx={{
                 fontWeight: 700,
