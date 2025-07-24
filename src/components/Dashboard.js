@@ -34,40 +34,58 @@ const Dashboard = ({data}) => {
         </Grid>
       </Grid>
     </Paper>
-    <Paper elevation={2} sx={{ mt: 4, p: 2, width: '50%', ml: 0 }}>
-      <Typography variant="h6" align="center" sx={{ mb: 2 }}>CIO KPI</Typography>
-      <TableContainer>
-        <Table sx={{ minWidth: 400 }} stickyHeader>
-          <TableHead>
-            <TableRow>
-              <TableCell><b>Project</b></TableCell>
-              <TableCell align="center"><b>Java Impacted</b></TableCell>
-              <TableCell align="center"><b>Java %</b></TableCell>
-              <TableCell align="center"><b>Python Impacted</b></TableCell>
-              <TableCell align="center"><b>Python %</b></TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.TableData.map((row) => {
-              const py = row.pythonProjects || row.PythonProjects;
-              const javaPercent = parseInt(row.JavaProjects.percentageImpact);
-              const pythonPercent = parseInt(py.percentageImpact);
-              const highlight = javaPercent < 30 || pythonPercent < 30;
-              return (
-                <TableRow key={row.id} sx={{ backgroundColor: highlight ? '#fce6e9ff' : '#dbf6ddff', transition: 'background 0.3s' }}>
-                  <TableCell>{row.name}</TableCell>
-                  <TableCell align="center">{row.JavaProjects.impacted}</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 'bold', color: javaPercent < 30 ? 'error.main' : 'success.main' }}>{row.JavaProjects.percentageImpact}</TableCell>
-                  <TableCell align="center">{py.impacted}</TableCell>
-                  <TableCell align="center" sx={{ fontWeight: 'bold', color: pythonPercent < 30 ? 'error.main' : 'success.main' }}>{py.percentageImpact}</TableCell>
+    <Grid container spacing={3} sx={{ mt: 4 }}>
+      <Grid item xs={12} md={6}>
+        <Paper elevation={2} sx={{ p: 2 ,border: '2px solid', borderColor: 'primary.main', mb: 3 }}>
+          <Typography variant="h6" align="center" sx={{ mb: 2 }}>CIO KPI</Typography>
+          <TableContainer>
+            <Table sx={{ minWidth: 400 }} stickyHeader>
+              <TableHead>
+                <TableRow>
+                  <TableCell><b>Project</b></TableCell>
+                  <TableCell align="center"><b>Java Impacted</b></TableCell>
+                  <TableCell align="center"><b>Java %</b></TableCell>
+                  <TableCell align="center"><b>Python Impacted</b></TableCell>
+                  <TableCell align="center"><b>Python %</b></TableCell>
                 </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Paper>
-   
+              </TableHead>
+              <TableBody>
+                {data.TableData.map((row) => {
+                  const py = row.pythonProjects || row.PythonProjects;
+                  const javaPercent = parseInt(row.JavaProjects.percentageImpact);
+                  const pythonPercent = parseInt(py.percentageImpact);
+                  const highlight = javaPercent < 30 || pythonPercent < 30;
+                  return (
+                    <TableRow key={row.id} sx={{ backgroundColor: highlight ? '#fce6e9ff' : '#dbf6ddff', transition: 'background 0.3s' }}>
+                      <TableCell>{row.name}</TableCell>
+                      <TableCell align="center">{row.JavaProjects.impacted}</TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 'bold', color: javaPercent < 30 ? 'error.main' : 'success.main' }}>{row.JavaProjects.percentageImpact}</TableCell>
+                      <TableCell align="center">{py.impacted}</TableCell>
+                      <TableCell align="center" sx={{ fontWeight: 'bold', color: pythonPercent < 30 ? 'error.main' : 'success.main' }}>{py.percentageImpact}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <Paper elevation={2} sx={{ p: 2 ,border: '2px solid', borderColor: 'primary.main', mb: 3 }}>
+          <Typography variant="h6" align="center" sx={{ mb: 2 }}>Projects Trend</Typography>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={data.lineGraphData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="quarter" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="projectsAdded" stroke="#43a047" name="Projects per Quarter" />
+              <Line type="monotone" dataKey="incompatibleProjects" stroke="#e53935" name="Incompatible Projects" />
+            </LineChart>
+          </ResponsiveContainer>
+        </Paper>
+      </Grid>
+    </Grid>
     </>
   );
 };

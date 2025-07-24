@@ -65,6 +65,17 @@
           "percentageImpact": "30%"
         }
       }
+    ],
+    "lineGraphData": [
+      {
+        "quarter": "Q1", "projectsAdded": 10, "incompatibleProjects": 2
+      },
+      { "quarter": "Q2", "projectsAdded": 15, "incompatibleProjects": 5
+      },
+      { "quarter": "Q3", "projectsAdded": 20, "incompatibleProjects": 3
+      },
+      { "quarter": "Q4", "projectsAdded": 25, "incompatibleProjects": 4
+      }
     ]
   }
 }
