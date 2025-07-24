@@ -15,7 +15,6 @@ const Login = ({ onLogin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Dummy authentication
     if (username && password) {
       onLogin();
     }

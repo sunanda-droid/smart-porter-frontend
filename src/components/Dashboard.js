@@ -9,7 +9,7 @@ const Dashboard = ({data}) => {
      <Paper elevation={3} sx={{ p: 2, border: '2px solid', borderColor: 'primary.main', mb: 3 }}>
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6} md={3}>
-          <Paper elevation={2} sx={{ p: 2 }}>
+          <Paper elevation={2} sx={{ p: 2}} >
             <Typography variant="h6" align="center">Java Projects</Typography>
             <Typography variant="h4" align="center">{data.javaProjects}</Typography>
           </Paper>
@@ -35,7 +35,7 @@ const Dashboard = ({data}) => {
       </Grid>
     </Paper>
     <Paper elevation={2} sx={{ mt: 4, p: 2, width: '50%', ml: 0 }}>
-      <Typography variant="h6" align="center" sx={{ mb: 2 }}>Projects Impact Table</Typography>
+      <Typography variant="h6" align="center" sx={{ mb: 2 }}>CIO KPI</Typography>
       <TableContainer>
         <Table sx={{ minWidth: 400 }} stickyHeader>
           <TableHead>

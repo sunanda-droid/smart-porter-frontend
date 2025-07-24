@@ -1,7 +1,10 @@
 import React, { useState,useEffect } from "react";
 import { AppBar, Tabs, Tab, Box, Button, Toolbar, Typography } from "@mui/material";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import FactCheckIcon from '@mui/icons-material/FactCheck';
 import Dashboard from "./Dashboard";
 import Scans from "./Scans";
+import smartporterLogo from '../assets/smartporter-logo.png';
 
 const Main = ({ onLogout }) => {
   const [tab, setTab] = useState(0);
@@ -48,7 +51,7 @@ const Main = ({ onLogout }) => {
                 p: 0.5
               }}>
                 <img
-                  src={process.env.PUBLIC_URL + '/smartporter-logo.png'}
+                  src={smartporterLogo}
                   alt="SmartPorter Logo"
                   style={{ width: '100%', height: '100%', objectFit: 'contain' }}
                 />
@@ -78,9 +81,46 @@ const Main = ({ onLogout }) => {
             </Button>
           </Toolbar>
         </AppBar>
-        <Tabs value={tab} onChange={handleTabChange} centered>
-          <Tab label="Dashboard" /> 
-          <Tab label="Scans" />
+        <Tabs
+          value={tab}
+          onChange={handleTabChange}
+          centered
+          TabIndicatorProps={{
+            style: {
+              background: 'linear-gradient(90deg, #43a047 0%, #a5d6a7 100%)',
+              height: 6,
+              borderRadius: 6,
+              transition: 'all 0.3s',
+            }
+          }}
+          sx={{
+            mt: 1,
+            mb: 1,
+            '.MuiTab-root': {
+              fontWeight: 700,
+              fontSize: 18,
+              letterSpacing: 1,
+              textTransform: 'none',
+              px: 4,
+              py: 1.5,
+              borderRadius: 3,
+              minHeight: 48,
+              color: '#1b5e20',
+              transition: 'background 0.2s, color 0.2s',
+              '&.Mui-selected': {
+                color: '#fff',
+                background: 'linear-gradient(90deg, #43a047 0%, #388e3c 100%)',
+                boxShadow: '0 2px 12px rgba(67,160,71,0.10)'
+              },
+              '&:hover': {
+                background: 'rgba(67,160,71,0.08)',
+                color: '#1b5e20'
+              }
+            }
+          }}
+        >
+          <Tab icon={<DashboardIcon sx={{ mr: 1 }} />} iconPosition="start" label="Dashboard" />
+          <Tab icon={<FactCheckIcon sx={{ mr: 1 }} />} iconPosition="start" label="Scans" />
         </Tabs>
         <Box sx={{ p: 3 }}>
           {tab === 0 && <Dashboard data={dashboardData} />}
