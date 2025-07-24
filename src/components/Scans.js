@@ -27,7 +27,7 @@ const Scans = () => {
     try {
       const res = await axios.get("/scans.json");
       // const res = await axios.get(`${API_BASE}/check-compatibility?repoUrl=${encodeURIComponent(selectedRepo)}`);
-      setTableData(res.data.scans || []);
+      setTableData(res.data || []);
     } catch (err) {
       setTableData([]);
     }
@@ -41,6 +41,10 @@ const Scans = () => {
     setDialogSummary(scan.compatibilitySummary || "No summary available");
     setDialogOpen(true);
   };
+
+  function areAllCompatible() {
+  return tableData.every(scan => scan.compatibilityFlag === true);
+}
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   const [upgradeMessage, setUpgradeMessage] = useState("");
@@ -108,83 +112,88 @@ const Scans = () => {
           {loading ? "Loading..." : "Run"}
         </Button>
       </Box>
-      {tableData.length > 0 &&
-      <Table sx={{ width: '100%', minWidth: 1100, tableLayout: 'fixed' }}>
-        <TableHead>
-          <TableRow sx={{ backgroundColor: 'primary.light' }}>
-            <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '14%' }}>Group Id</TableCell>
-            <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '16%' }}>Artifact Id</TableCell>
-            <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '13%' }}>Current Version</TableCell>
-            <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '13%' }}>Latest Version</TableCell>
-            <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '14%' }}>Status</TableCell>
-            <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '30%' }}>Actions</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {tableData.map((scan, idx) => (
-            <TableRow
-              key={scan.id}
-              sx={{
-                backgroundColor: idx % 2 === 0 ? 'grey.100' : 'background.paper',
-                '&:hover': { backgroundColor: 'grey.200' },
-                transition: 'background 0.2s',
-              }}
-            >
-              <TableCell sx={{ fontSize: 14, width: '14%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.groupId}</TableCell>
-              <TableCell sx={{ fontSize: 14, width: '16%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.artifactId}</TableCell>
-              <TableCell sx={{ fontSize: 14, width: '13%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.currentVersion}</TableCell>
-              <TableCell sx={{ fontSize: 14, width: '13%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.latestVersion}</TableCell>
-              <TableCell sx={{ fontSize: 14, width: '14%' }}>
-                <Box
+
+      {tableData.length > 0 && (
+        <>
+          <Table sx={{ width: '100%', minWidth: 1100, tableLayout: 'fixed' }}>
+            <TableHead>
+              <TableRow sx={{ backgroundColor: 'primary.light' }}>
+                <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '14%' }}>Group Id</TableCell>
+                <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '16%' }}>Artifact Id</TableCell>
+                <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '13%' }}>Current Version</TableCell>
+                <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '13%' }}>Latest Version</TableCell>
+                <TableCell sx={{ fontWeight: 700, color: '#111', fontSize: 16, width: '14%' }}>Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {tableData.map((scan, idx) => (
+                <TableRow
+                  key={scan.id}
                   sx={{
-                    px: 1.5,
-                    py: 0.5,
-                    borderRadius: 2,
-                    display: 'inline-block',
-                    color:
-                      scan.status === 'Up-to-date'
-                        ? 'success.light'
-                        : scan.status === 'Outdated'
-                        ? 'info.light'
-                        : 'error.light',
-                    color:
-                      scan.status === 'Up-to-date'
-                        ? 'success.dark'
-                        : scan.status === 'Outdated'
-                        ? 'info.dark'
-                        : 'error.dark',
-                    fontWeight: 600,
+                    backgroundColor: idx % 2 === 0 ? 'grey.100' : 'background.paper',
+                    '&:hover': { backgroundColor: 'grey.200' },
+                    transition: 'background 0.2s',
                   }}
                 >
-                  {scan.status}
-                </Box>
-              </TableCell>
-              <TableCell sx={{ fontSize: 14, width: '30%' }}>
-                <Button
-                  variant="outlined"
-                  color="success"
-                  size="medium"
-                  sx={{ mr: 2, fontWeight: 600, borderRadius: 2, textTransform: 'none' }}
-                  onClick={() => handleSummaryClick(scan)}
-                >
-                  Compatibility Summary
-                </Button>
-                <Button
-                  variant="contained"
-                  color="success"
-                  size="medium"
-                  sx={{ fontWeight: 600, borderRadius: 2, textTransform: 'none' }}
-                  onClick={() => handleAutoUpgrade(scan)}
-                  disabled={scan.compatibilityFlag === false}
-                >
-                  AutoUpgrade
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>}
+                  <TableCell sx={{ fontSize: 14, width: '14%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.groupId}</TableCell>
+                  <TableCell sx={{ fontSize: 14, width: '16%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.artifactId}</TableCell>
+                  <TableCell sx={{ fontSize: 14, width: '13%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.currentVersion}</TableCell>
+                  <TableCell sx={{ fontSize: 14, width: '13%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{scan.latestVersion}</TableCell>
+                  <TableCell sx={{ fontSize: 14, width: '14%' }}>
+                    <Box
+                      sx={{
+                        px: 1.5,
+                        py: 0.5,
+                        borderRadius: 2,
+                        display: 'inline-block',
+                        color:
+                          scan.status === 'Up-to-date'
+                            ? 'success.light'
+                            : scan.status === 'Outdated'
+                            ? 'info.light'
+                            : 'error.light',
+                        color:
+                          scan.status === 'Up-to-date'
+                            ? 'success.dark'
+                            : scan.status === 'Outdated'
+                            ? 'info.dark'
+                            : 'error.dark',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {scan.status}
+                    </Box>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+          <Box sx={{ display: 'flex', justifyContent: 'center', gap: 3, mt: 3 }}>
+            <Button
+              variant="contained"
+              color="success"
+              size="large"
+              sx={{ fontWeight: 600, borderRadius: 2, textTransform: 'none' }}
+              onClick={() => tableData.length > 0 && handleSummaryClick(tableData[0])}
+              disabled={tableData.length === 0}
+            >
+              View Report
+            </Button>
+            <Button
+              variant="contained"
+              color="success"
+              size="large"
+              sx={{ fontWeight: 600, borderRadius: 2, textTransform: 'none' }}
+              onClick={() => tableData.length > 0 && handleAutoUpgrade(tableData[0])}
+              disabled={ tableData.length > 0 && !areAllCompatible()}
+            >
+              AutoUpgrade
+            </Button>
+          </Box>
+        </>
+      )}
       </TableContainer>
+      
       <Dialog open={dialogOpen} onClose={handleDialogClose} maxWidth="sm" fullWidth>
         <DialogTitle>Compatibility Summary</DialogTitle>
         <DialogContent>
