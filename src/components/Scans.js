@@ -18,13 +18,15 @@ const Scans = () => {
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Use API base URL from .env
+  const API_BASE = process.env.REACT_APP_API_BASE_URL;
   // Simulate API call on Run
   const handleRun = async () => {
     if (!selectedRepo) return;
     setLoading(true);
     try {
       const res = await axios.get("/scans.json");
-      // const res = await axios.get(`/mavenScan?repo=${selectedRepo}`);
+      // const res = await axios.get(`${API_BASE}/check-compatibility?repoUrl=${encodeURIComponent(selectedRepo)}`);
       setTableData(res.data.scans || []);
     } catch (err) {
       setTableData([]);
@@ -48,8 +50,8 @@ const Scans = () => {
     setUpgradeLoading(true);
     setUpgradeDialogOpen(true);
     try {
-      // const res = await axios.post('/upgrateRepo', { artifactId: scan.artifactId });
-      const res = await axios.get("/autoUpgrade.json");
+       const res = await axios.get("/autoUpgrade.json");
+      // const res = await axios.post(`${API_BASE}/update-Repo`, { artifactId: scan.artifactId });
       setUpgradeMessage(res.data.message || "Upgrade completed.");
     } catch (err) {
       setUpgradeMessage("Upgrade failed.");
