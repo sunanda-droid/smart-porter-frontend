@@ -28,12 +28,46 @@ const Main = ({ onLogout }) => {
   return (
     dashboardData && (
       <Box>
-        <AppBar position="static">
+        <AppBar position="static" elevation={4} sx={{
+          background: 'linear-gradient(90deg, #1b5e20 0%, #388e3c 100%)',
+          boxShadow: '0 4px 24px rgba(27, 94, 32, 0.18)'
+        }}>
           <Toolbar>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
-              Smart Porter
-            </Typography>
-            <Button color="inherit" onClick={onLogout}>
+            <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+              <Box sx={{
+                width: 40,
+                height: 40,
+                background: 'white',
+                borderRadius: '50%',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                mr: 2,
+                boxShadow: 2
+              }}>
+                <span role="img" aria-label="logo" style={{ fontSize: 28 }}>⚡</span>
+              </Box>
+              <Typography variant="h5" sx={{
+                fontWeight: 700,
+                letterSpacing: 2,
+                color: 'white',
+                textShadow: '1px 2px 8px rgba(27,94,32,0.25)'
+              }}>
+                Smart Porter
+              </Typography>
+            </Box>
+            <Button color="inherit" onClick={onLogout} sx={{
+              fontWeight: 600,
+              border: '1.5px solid #fff',
+              borderRadius: 2,
+              px: 3,
+              ml: 2,
+              background: 'rgba(255,255,255,0.08)',
+              transition: 'background 0.2s',
+              '&:hover': {
+                background: 'rgba(255,255,255,0.18)'
+              }
+            }}>
               Logout
             </Button>
           </Toolbar>
