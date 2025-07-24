@@ -15,7 +15,6 @@ const Main = ({ onLogout }) => {
     setTab(newValue);
   };
 
-
    useEffect(() => {
      fetch("./dashboard.json")
     .then((res) => res.json())

@@ -5,7 +5,7 @@ import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow
 const Scans = () => {
   // List of repositories for dropdown (mocked for now)
   const repoOptions = [
-
+   {"repo": "java-Reboot_Demo", "value": "https://github.com/ELAKIYA2000/Reboot_Demo"},
    {"repo": "java-hello-world-with-maven", "value": "https://github.com/jabedhasan21/java-hello-world-with-maven"},
    {"repo": "springbootwebapp", "value": "https://github.com/springframeworkguru/springbootwebapp"},
    {"repo": "springboot-project", "value": "https://github.com/sqmax/springboot-project"},
@@ -17,6 +17,8 @@ const Scans = () => {
   const [selectedRepo, setSelectedRepo] = useState("");
   const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [upgradeLoading, setUpgradeLoading] = useState(false);
+
 
   // Use API base URL from .env
   const API_BASE = process.env.REACT_APP_API_BASE_URL;
@@ -25,8 +27,8 @@ const Scans = () => {
     if (!selectedRepo) return;
     setLoading(true);
     try {
-      const res = await axios.get("/scans.json");
-      // const res = await axios.get(`${API_BASE}/check-compatibility?repoUrl=${encodeURIComponent(selectedRepo)}`);
+      // const res = await axios.get("/scans.json");
+      const res = await axios.post(`http://127.0.0.1:8080/check-compatibility?repoUrl=${selectedRepo}`);
       setTableData(res.data || []);
     } catch (err) {
       setTableData([]);
@@ -36,9 +38,22 @@ const Scans = () => {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogSummary, setDialogSummary] = useState("");
-
-  const handleSummaryClick = (scan) => {
-    setDialogSummary(scan.compatibilitySummary || "No summary available");
+ const summaryBody={
+        "repoUrl": selectedRepo,
+        "dependencies": tableData
+      }
+  const handleSummaryClick = async () => {
+    setDialogOpen(true);
+    setUpgradeLoading(true);
+    try {
+      // const res = await axios.get("/scans.json");
+     
+      const res = await axios.post(`http://127.0.0.1:5000/analyze-compatibility`,summaryBody);
+      setDialogSummary(res.data);
+    } catch (err) {
+      setDialogSummary("No summary available");
+    }
+    setUpgradeLoading(false);
     setDialogOpen(true);
   };
 
@@ -48,13 +63,12 @@ const Scans = () => {
 
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
   const [upgradeMessage, setUpgradeMessage] = useState("");
-  const [upgradeLoading, setUpgradeLoading] = useState(false);
 
-  const handleAutoUpgrade = async (scan) => {
+  const handleAutoUpgrade = async () => {
     setUpgradeLoading(true);
     setUpgradeDialogOpen(true);
     try {
-       const res = await axios.get("/autoUpgrade.json");
+       const res = await axios.post("http://127.0.0.1:8000/update-repo",summaryBody);
       // const res = await axios.post(`${API_BASE}/update-Repo`, { artifactId: scan.artifactId });
       setUpgradeMessage(res.data.message || "Upgrade completed.");
     } catch (err) {
@@ -72,6 +86,7 @@ const Scans = () => {
   const handleDialogClose = () => {
     setDialogOpen(false);
     setDialogSummary("");
+    setUpgradeLoading(false);
   };
 
   return (
@@ -193,17 +208,31 @@ const Scans = () => {
         </>
       )}
       </TableContainer>
-      
+     
       <Dialog open={dialogOpen} onClose={handleDialogClose} maxWidth="sm" fullWidth>
-        <DialogTitle>Compatibility Summary</DialogTitle>
+        {upgradeLoading ? 
+         <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 4 }}>
+              {/* <Typography variant="body1" sx={{ mb: 2, fontWeight: 600, color: 'primary.main' }}>
+                creating a featureBranch with updates
+              </Typography> */}
+              <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                <Typography variant="body1" sx={{ mr: 2 }}>Genereating Report...</Typography>
+                <Box sx={{ display: 'inline-block' }}>
+                  <span className="MuiCircularProgress-root MuiCircularProgress-colorPrimary" style={{ width: 32, height: 32, display: 'inline-block', border: '4px solid #1976d2', borderRadius: '50%', borderTop: '4px solid #fff', animation: 'spin 1s linear infinite' }}></span>
+                </Box>
+                <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
+              </Box>
+            </Box>:<>
+               <DialogTitle>Compatibility Summary</DialogTitle>
         <DialogContent>
           <Typography variant="body1" sx={{ py: 2 }}>
-            {dialogSummary}
+            {dialogSummary.replace(/\*/g, ' ')}
           </Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose} color="primary" variant="contained">Close</Button>
-        </DialogActions>
+        </DialogActions></>
+}
       </Dialog>
       <Dialog open={upgradeDialogOpen} onClose={handleUpgradeDialogClose} maxWidth="sm" fullWidth>
         <DialogTitle>AutoUpgrade Result</DialogTitle>
