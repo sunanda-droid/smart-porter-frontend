@@ -28,7 +28,7 @@ const Scans = () => {
     setLoading(true);
     try {
       // const res = await axios.get("/scans.json");
-      const res = await axios.post(`http://127.0.0.1:8080/check-compatibility?repoUrl=${selectedRepo}`);
+      const res = await axios.post(`http://35.244.60.32/check-compatibility?repoUrl=${selectedRepo}`);
       setTableData(res.data || []);
     } catch (err) {
       setTableData([]);
@@ -48,7 +48,7 @@ const Scans = () => {
     try {
       // const res = await axios.get("/scans.json");
      
-      const res = await axios.post(`http://127.0.0.1:5000/analyze-compatibility`,summaryBody);
+      const res = await axios.post(`http://35.200.149.26/analyze-compatibility`,summaryBody);
       setDialogSummary(res.data);
     } catch (err) {
       setDialogSummary("No summary available");
@@ -68,7 +68,7 @@ const Scans = () => {
     setUpgradeLoading(true);
     setUpgradeDialogOpen(true);
     try {
-       const res = await axios.post("http://127.0.0.1:8000/update-repo",summaryBody);
+       const res = await axios.post("http://34.100.131.90/update-repo",summaryBody);
       // const res = await axios.post(`${API_BASE}/update-Repo`, { artifactId: scan.artifactId });
       setUpgradeMessage(res.data.message || "Upgrade completed.");
     } catch (err) {
