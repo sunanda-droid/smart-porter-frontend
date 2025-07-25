@@ -11,7 +11,6 @@ const Scans = () => {
    {"repo": "springboot-project", "value": "https://github.com/sqmax/springboot-project"},
    {"repo": "public-api-java", "value": "https://github.com/DependencyTrack/public-api-java"},
    {"repo": "javaparser-maven-sample", "value": "https://github.com/javaparser/javaparser-maven-sample"},
-   {"repo": "spring-petclinic", "value": "https://github.com/spring-projects/spring-petclinic"}
   ];
 
   const [selectedRepo, setSelectedRepo] = useState("");
@@ -28,7 +27,7 @@ const Scans = () => {
     setLoading(true);
     try {
       // const res = await axios.get("/scans.json");
-      const res = await axios.post(`http://127.0.0.1:8080/check-compatibility?repoUrl=${selectedRepo}`);
+      const res = await axios.post(`https://compatibility-be-server-477875572318.asia-south1.run.app/check-compatibility?repoUrl=${selectedRepo}`);
       setTableData(res.data || []);
     } catch (err) {
       setTableData([]);
@@ -223,10 +222,14 @@ const Scans = () => {
                 <style>{`@keyframes spin { 100% { transform: rotate(360deg); } }`}</style>
               </Box>
             </Box>:<>
-               <DialogTitle>Compatibility Summary</DialogTitle>
+               <DialogTitle sx={{color:"#1b5e20"}}>Compatibility Summary</DialogTitle>
         <DialogContent>
           <Typography variant="body1" sx={{ py: 2 }}>
-            {dialogSummary.replace(/\*/g, ' ')}
+            {dialogSummary
+    .replace(/\*/g, ' ')   
+    .split(/(?<=\.)\s+/).map((line, index) => (
+        <p key={index}>{line}</p> // Each sentence as a separate paragraph
+      ))}
           </Typography>
         </DialogContent>
         <DialogActions>
@@ -235,7 +238,7 @@ const Scans = () => {
 }
       </Dialog>
       <Dialog open={upgradeDialogOpen} onClose={handleUpgradeDialogClose} maxWidth="sm" fullWidth>
-        <DialogTitle>AutoUpgrade Result</DialogTitle>
+        <DialogTitle sx={{color:"#1b5e20"}}>AutoUpgrade Result</DialogTitle>
         <DialogContent>
           {upgradeLoading ? (
             <Box sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', py: 4 }}>
