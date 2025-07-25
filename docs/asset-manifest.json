@@ -1,11 +1,11 @@
 {
   "files": {
-    "main.js": "/static/js/main.ed88e144.js",
+    "main.js": "/static/js/main.b919259c.js",
     "static/media/smartporter-logo.png": "/static/media/smartporter-logo.950157fc373c5c5bad97.png",
     "index.html": "/index.html",
-    "main.ed88e144.js.map": "/static/js/main.ed88e144.js.map"
+    "main.b919259c.js.map": "/static/js/main.b919259c.js.map"
   },
   "entrypoints": [
-    "static/js/main.ed88e144.js"
+    "static/js/main.b919259c.js"
   ]
 }

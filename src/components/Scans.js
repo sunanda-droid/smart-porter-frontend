@@ -6,6 +6,7 @@ const Scans = () => {
   // List of repositories for dropdown (mocked for now)
   const repoOptions = [
    {"repo": "java-Reboot_Demo", "value": "https://github.com/ELAKIYA2000/Reboot_Demo"},
+   {"repo": "java-Reboot_Demo", "value": "https://github.com/ELAKIYA2000/Reboot_Demo"},
    {"repo": "java-hello-world-with-maven", "value": "https://github.com/jabedhasan21/java-hello-world-with-maven"},
    {"repo": "springbootwebapp", "value": "https://github.com/springframeworkguru/springbootwebapp"},
    {"repo": "springboot-project", "value": "https://github.com/sqmax/springboot-project"},
@@ -207,6 +208,7 @@ const Scans = () => {
         </>
       )}
       </TableContainer>
+     
      
       <Dialog open={dialogOpen} onClose={handleDialogClose} maxWidth="sm" fullWidth>
         {upgradeLoading ? 
