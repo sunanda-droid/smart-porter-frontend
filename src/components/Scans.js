@@ -6,7 +6,6 @@ const Scans = () => {
   // List of repositories for dropdown (mocked for now)
   const repoOptions = [
    {"repo": "java-Reboot_Demo", "value": "https://github.com/ELAKIYA2000/Reboot_Demo"},
-   {"repo": "java-Reboot_Demo", "value": "https://github.com/ELAKIYA2000/Reboot_Demo"},
    {"repo": "java-hello-world-with-maven", "value": "https://github.com/jabedhasan21/java-hello-world-with-maven"},
    {"repo": "springbootwebapp", "value": "https://github.com/springframeworkguru/springbootwebapp"},
    {"repo": "springboot-project", "value": "https://github.com/sqmax/springboot-project"},
@@ -48,7 +47,7 @@ const Scans = () => {
     try {
       // const res = await axios.get("/scans.json");
      
-      const res = await axios.post(`http://127.0.0.1:5000/analyze-compatibility`,summaryBody);
+      const res = await axios.post(`https://agent-be-server-477875572318.asia-south1.run.app/analyze-compatibility`,summaryBody);
       setDialogSummary(res.data);
     } catch (err) {
       setDialogSummary("No summary available");
@@ -68,7 +67,7 @@ const Scans = () => {
     setUpgradeLoading(true);
     setUpgradeDialogOpen(true);
     try {
-       const res = await axios.post("http://127.0.0.1:8000/update-repo",summaryBody);
+       const res = await axios.post("https://repo-be-server-477875572318.asia-south1.run.app/update-repo",summaryBody);
       // const res = await axios.post(`${API_BASE}/update-Repo`, { artifactId: scan.artifactId });
       setUpgradeMessage(res.data.message || "Upgrade completed.");
     } catch (err) {
